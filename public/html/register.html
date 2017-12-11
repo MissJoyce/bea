@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<link rel="stylesheet" href="./public/public.css" />
+	<link rel="stylesheet" href="./css/register.css" />
+	<script src="./js/pool.js"></script>
+	<script src="http://cdn.bootcss.com/jquery/1.8.3/jquery.js"></script>
+	<body>
+		<div class="head"></div>
+		<div class="margin regist">
+			<div class="registTable">
+				<div class="tabTop clear">
+					<p class="left">登录</p>
+					<a href="login.html" class="right">立即登录</a>
+					<span class="right">已经是会员？</span>
+				</div>
+				<input type="text" id="name" placeholder="姓名" tabindex="1"/>
+				<select name="" id="select">
+					<option>保密</option>
+					<option>先生</option>
+					<option selected="selected">女士</option>
+					<option>小姐</option>
+				</select>
+				<input type="password" id="pass" placeholder="密码" tabindex="2"/>
+				<input type="password" id="passCheck" placeholder="确认密码" tabindex="3" />
+				<input type="text" id="code" placeholder="右图中字母数字" tabindex="4" />
+				<input type="text" id="authCode" value="" />
+				<input type="text" id="prenum" value="+86"/>
+				<input type="text" id="phone" placeholder="手机号" tabindex="5" />
+				<input type="button" value="获取验证码" id="sendCode"/>
+				<input type="text" placeholder="短信验证码"  id="checkCode" tabindex="6" /></br>
+				<input type="checkbox" checked="checked" id="check"/>
+				<b>我已经阅读并同意</b>
+				<a href="#" class="file">野兽派服务条款</a>
+				<input type="text" id="tishi" value=""/>
+				<a href="#" class="goIndex" target="_self"><button class="registBtn">注册</button></a>							
+			</div>
+			
+			<div class="tips">
+				<div class="flower">
+					<p class="time"><span></span>生日花</p>
+					<img src="./images/11-16.jpg" alt="" class="birst"/>
+					<a href=""><img src="./images/kefu.png" alt="" /></a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="foot"></div>
+	</body>
+</html>
+<script>
+jQuery.noConflict();
+(function($){
+	$(function(){
+		$(".head").load("head.html",function(){});
+		
+		$.fn.Check=function(){
+			var that=this;
+			this.find(".registBtn").click(function(){
+				/*var uname=this.find("#name").val();
+				var pass=this.find("#pass").val();*/
+				var bStop=true;
+				var tishi=that.find("#tishi");
+				//手机号
+				var regPhone=/^1{1}[^0,1,2]{1}\d{9}/;
+				var phone=that.find("#phone").val();
+				if(!regPhone.test(phone)){
+					that.find("#phone").css("border-color","#BE0929");
+					tishi.val("手机格式不正确");
+					//bStop=false;
+				}
+				//确认密码
+				var pass=that.find("#pass").val();
+				var pass2=that.find("#passCheck").val();
+				if(pass2!=pass){
+					that.find("#passCheck").css("border-color","#BE0929");
+					tishi.val("请重新输入确认密码");
+					bStop=false;
+				}
+				//密码
+				var regPass=/^[a-zA-Z]{1}[a-zA-Z0-9]{5,15}/;
+				var pass=that.find("#pass").val();
+				if(!regPass.test(pass)){
+					that.find("#pass").css("border-color","#BE0929");
+					tishi.val("密码格式不正确");
+					bStop=false;
+				}
+			
+				//名称
+				var regName=/^[^\d]{1}[a-zA-Z0-9_]{1,5}/;
+				var name=that.find("#name").val();
+				if(!regName.test(name)){
+					that.find("#name").css("border-color","#BE0929");
+					tishi.val("姓名格式不正确");
+					bStop=false;
+				}
+			
+				if(bStop){
+					$(".goIndex").attr("href","login.html");
+					//var uname = $("#name").val();
+					//var pass = #("#pass").val();
+					// setCookie("username",name);
+					// setCookie("password",pass);
+					localStorage.setItem("username",name);
+					localStorage.setItem("password",pass);
+				}
+				
+			});
+	
+			//获取验证码焦点触发按钮颜色变化
+			//console.log(this.find("#check")[0].checked);
+			this.find("#checkCode").focus(function(){
+				that.find(".registBtn").css("background-color","#3c3c3c");
+			});
+			this.find("#checkCode").blur(function(){
+				that.find(".registBtn").css("background-color","#ccc");
+			});
+		
+		}
+		//调用
+		$(".registTable").Check();
+		
+		//动态显示时间
+		var d = new Date();
+		//console.log(d);
+		function date(d){
+			return addZero((d.getMonth()+1))+"月"+addZero(d.getDate())+"日";
+		}
+		var time=date(d);
+		//console.log(time);
+		//console.log($(".tips .time").find("span")[0]);
+		$(".tips .time").find("span")[0].innerHTML=time;
+		
+		$(".foot").load("foot.html",function(){});
+	})
+})(jQuery)
+</script>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="./public/public.css" />
+		<link rel="stylesheet" href="./css/head-foot.css" />
+		<script src="http://cdn.bootcss.com/jquery/1.8.3/jquery.js"></script>
+		<script src="./js/pool.js"></script>
+		<script src="./js/jquery-ui.min.js"></script>
+		<!-- <script src="./js/search.js"></script> -->
+		<script src="ajax.js"></script>
+	</head>
+	<body>
+		<div class="margin">
+			<header>
+				<section class="top clear">
+					<div class="left">
+						<span>欢迎来到 THE BEAST 野兽派！</span>
+						<div id="login">
+							<a href="http://localhost:8686/login" class="login">登录</a>
+							<div class="loginTable">
+								<label for="phone">邮箱/实体店注册手机:</label>
+								<input type="text" id="tel"/>
+								<label for="psd">密码:</label>
+								<input type="text" id="psd"/>
+								<a href="" class="forget">忘记密码了？</a>
+								<a href="http://localhost:8686/login" class="login-in"><img src="./images/login-in.png" /></a>
+								<img src="./images/code1.jpg" alt="" class="code1"/>
+								<p>关注并绑定野兽派官方微信，获取订单实时状态通知。</p>
+								<a href="" class="weibo-login">用新浪微博登陆</a>
+							</div>
+						</div>
+						<a href="http://localhost:8686/register" class="register">注册</a>
+						
+						
+					</div>
+					
+					<div class="logo left">
+						<a href="http://localhost:8686/"><img src="./images/logo.png"  /></a>
+					</div>
+					<div class="search right clear">
+						<input type="button" id="btn" class="left"/>
+						<div class="box left">
+							<form action="http://www.thebeastshop.com/" method="get">
+								<input type="text" id="searchTxt" value="新鲜上架" />
+								<ul class="remind">
+								</ul>
+							</form>
+							
+						</div>
+						<div class="iconShopCar left">
+							<a href="http://localhost:8686/shopcart.html"><img src="./images/cart.png" alt="" /></a>
+							<!--<div class="preview">
+								购物车预览
+							</div>-->
+						</div>
+					</div>
+				</section>
+				<nav>
+					<ul class="nav-list">
+						<!--<li>
+							<p><a href="" target="_blank">1</a></p>
+							<p><a href="" target="_blank">2</a></p>
+							<span></span>
+							<div class="items">
+								<dl class="single-item">
+									<dt>海淘</dt>
+									<dd>零食</dd>
+									<dd>辣条</dd>
+									<dd>辣条</dd>
+									<dd>辣条</dd>
+								</dl>
+								<div class="img-item">
+									<a href=""><img src="" /></a>
+									<p class="cn"><a href=""></a></p>
+									<p class="en"><a href=""></a></p>
+								</div>
+							</div>
+							<div class="item">
+								<div class="s-img-item">
+									<div class="s-item">
+										<a href="">
+											<img src="" alt="" />
+											<p></p>
+											<p></p>
+										</a>
+										<a href="">
+											<img src="" alt="" />
+											<p></p>
+											<p></p>
+										</a>
+										<a href="">
+											<img src="" alt="" />
+											<p></p>
+											<p></p>
+										</a>
+									</div>
+									<a href="a-more">查看更加新品></a>
+								</div>
+								<div class="img-item">
+									<div>
+										<a href=""><img src="" /></a>
+									</div>
+									<p class="cn"><a href=""></a></p>
+									<p class="en"><a href=""></a></p>
+								</div>
+							</div>
+						</li>-->	
+					</ul>
+				</nav>
+			</header>			
+		</div>
+		
+	</body>
+</html>
+<script>
+	jQuery.noConflict();
+	(function($){
+		$(function(){
+			$("#login").hover(function(){
+				//登录表格划过出现
+				$(".loginTable").css("display","block");
+			},function(){
+				$(".loginTable").css("display","none");
+			
+			});
+			//判断页面中是否存在姓名和密码的cookie 如果有，默认填上
+			if(localStorage.yes){
+				var uName=localStorage.username;
+				var name=uName;
+				$(".login").text(name);
+			}
+			//搜索框自动填充
+			/*$("#searchTxt").autocomplete({source:["花艺","家纺","家饰","美妆","餐厨","香氛","珠宝配饰","家居服","礼物","海外直邮"]});*/
+			
+			//导航内容ajax请求
+			ajax({
+				url:"http://localhost:8686/head",
+				data:{},
+				success:function(res){
+					//console.log(".....",res);
+					res=JSON.parse(res);
+					var navList=$(".nav-list");
+					for(var i=0;i<res.data.length;i++){
+						//如果存在items,表示有二级导航，没有items,只需生成一级导航
+						if(res.data[i].items){
+							if(i==1){
+								//第二个二级导航
+								var Litem=`<div class="s-img-item left">
+												<div class="s-item clear">
+													<a href="${res.data[1].items[0].item[0].url}" class="left">
+														<img src="${res.data[1].items[0].item[0].img}" alt="" />
+														<p>${res.data[1].items[0].item[0].ename}</p>
+														<p>${res.data[1].items[0].item[0].cname}</p>
+													</a>
+													<a href="${res.data[1].items[0].item[1].url}" class="left">
+														<img src="${res.data[1].items[0].item[1].img}" alt="" />
+														<p>${res.data[1].items[0].item[1].ename}</p>
+														<p>${res.data[1].items[0].item[1].cname}</p>
+													</a>
+													<a href="${res.data[1].items[0].item[2].url}" class="left">
+														<img src="${res.data[1].items[0].item[2].img}" alt="" />
+														<p>${res.data[1].items[0].item[2].ename}</p>
+														<p>${res.data[1].items[0].item[2].cname}</p>
+													</a>
+												</div>
+												<a href="#" class="a-more">查看更加新品></a>
+											</div>`;
+								var Ritem=`<div class="img-item right">
+												<div>
+													<a href="${res.data[1].items[1].url}"><img src="${res.data[1].items[1].img}" /></a>
+												</div>
+												<p class="cn"><a href="index.html">${res.data[1].items[1].ename}</a></p>
+												<p class="en"><a href="index.html">${res.data[1].items[1].cname}</a></p>
+											</div>`;
+						
+								var html=`<li>
+												<p><a href="http://localhost:8686/" target="_blank">${res.data[1].ename}</a></p>
+												<p><a href="http://localhost:8686/">${res.data[1].cname}</a>
+													<span></span>
+												</p>
+												
+												<div class="items clear">${Litem}${Ritem}</div>
+										  </li>`
+								navList.append(html);
+								continue;
+							}	
+							//遍历items
+							var textItem="";
+							var imgItem="";
+							for(var j=0;j<res.data[i].items.length;j++){
+								
+								//如果type==text,表示有dl列表item，
+								
+								if(res.data[i].items[j].type=="text"){
+									
+									if(!res.data[i].items[j].title==""){
+										var dtHtml=`<dt>${res.data[i].items[j].title}</dt>`;
+									}else{
+										var dtHtml=``;
+									}
+									
+									var arr=res.data[i].items[j].item.map(function(value){
+										//console.log(value);
+										return `<dd><a href="#">${value.name}</a></dd>`
+									});
+									var ddHtml=arr.join("");
+									var ldd=`<dd class="all"><a href="#">查看全部></a><dd>`
+									textItem+=`<dl class="single-item left">${dtHtml}${ddHtml}${ldd}</dl>`;
+									//console.log(textItem);
+								}
+								
+								if(res.data[i].items[j].type=="img"){
+									var RimgItem=`<div class="img-item right">
+													<div>
+														<a href="${res.data[i].items[j].url}"><img src="${res.data[i].items[j].img}" /></a>
+													</div>
+													<p class="cn"><a href="index.html">${res.data[i].items[j].ename}</a></p>
+													<p class="en"><a href="index.html">${res.data[i].items[j].cname}</a></p>
+												</div>`;
+									imgItem+=RimgItem;
+								}
+								
+								
+							}
+							
+							var html=`<li>
+										<p><a href="http://localhost:8686/">${res.data[i].ename}</a></p>
+										<p><a href="http://localhost:8686/">${res.data[i].cname}</a>
+											<span></span>
+										</p>
+										<div class="items clear">${textItem}${imgItem}</div>
+									  </li>`;
+							navList.append(html);
+							
+							
+						}else{
+							var html=`<li>
+									<p><a href="http://localhost:8686/">${res.data[i].ename}</a></p>
+									<p><a href="http://localhost:8686/">${res.data[i].cname}</a>
+										<span></span>
+									</p>
+								  </li>`;
+							navList.append(html);
+						}
+					}
+
+					$(".nav-list li").hover(function(){
+						
+						//$(this).find("span").css("display","block");
+						$(this).find("span").show();
+						if($(this).find(".items")){
+							//console.log(111);
+							$(this).find(".items").css("display","block");
+							//console.log($(this).find(".items"));
+							//move($(this).find(".items")[0],{"height":341});
+							//$(this).find(".items").children().css("display","block");
+							//$(this).find(".items").slideUp(1000);
+						}
+						
+					},function(){
+						//$(this).find("span").css("display","none");
+						$(this).find("span").hide();
+						if($(this).find(".items")){
+							$(this).find(".items").css("display","none");
+							//$(this).find(".items").stop(true).slideDown(500);
+							//move($(this).find(".items")[0],{"height":0});
+							//$(this).find(".items").children().css("display","none");
+						}
+					});
+				},
+				error:function(err){
+					console.log("error");
+				}
+			});
+
+
+			//搜索框
+			$("#searchTxt").eq(0).change(function(){
+				$(".remind").css("display","block");
+				var val=$("#searchTxt").val();
+				ajax({
+					url:"http://localhost:8686/head",
+					dataType:"jsonp",
+					jsonp:"cb",
+					data:{
+						requstion:val
+					},
+					success:function(res){
+						//console.log(res);
+						//console.log(res.status);
+						var arr=res.s.map(function(value,index){
+							if(index>=4){
+								return ``;
+							}else{
+								return `<li>${value}<li>`;
+							}
+						});
+						var html=arr.join("");
+						//console.log(html);
+						$(".remind").html(html);
+					}
+				});
+				
+			})
+
+
+			//
+
+		})
+		
+		
+	})(jQuery)
+
+</script>

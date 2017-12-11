@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="./public/public.css" />
+		<link rel="stylesheet" href="./css/head-foot.css" />
+		<script src="http://cdn.bootcss.com/jquery/1.8.3/jquery.js"></script>
+		<script src="./js/pool.js"></script>
+		<script src="./js/jquery-ui.min.js"></script>
+		<script src="ajax.js"></script>
+	</head>
+	<body>
+		<div class="margin">
+			<footer> 
+				<div class="service">
+					<!--<dl>
+						<dt>野兽VIP</dt>
+						<dd>野兽VIP</dd>
+						<dd>野兽VIP</dd>
+					</dl>-->
+				</div>
+				<div class="worktime">
+					<p>任何问题，扫描微信二维码，联系在线客服。   工作时间：周一至周五9:00-21:00；周六、周日 10:00-18:00，法定节假日休息</p>
+					<p>特别申明：野兽派正品仅在野兽派官网、天猫“THE BEAST野兽派官方旗舰店”、京东“THE BEAST野兽派官方旗舰店”、野兽派微信号及实体店有售</p>
+				</div>
+				<div class="foot">
+					<div class="link">
+						<a href="">关于我们</a>
+						<span>|</span>
+						<a href="">加入我们</a>
+						<span>|</span>
+						<a href="">合作练习</a>
+						<span>|</span>
+						<a href="">隐私权声明</a>
+						<span>|</span>
+						<a href="">上海野派电子商务有限公司</a>
+						<span>|</span>
+						<a href=""><img src="./images/gongshang.jpg" /></a>
+					</div>
+					<p>Copyright &copy; 野兽派2011-2017，All Rights Reserved | 沪ICP备12032741号</p>
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>
+<script>
+	jQuery.noConflict();
+	(function($){
+		$(function(){
+			ajax({
+				url:"http://localhost:8686/foot",
+				data:{},
+				success:function(res){
+					res=JSON.parse(res);
+					var service=$(".service");
+					//底部service
+					for(var i=0;i<res.footData.length;i++){
+						//生成dt
+						var dthtml=`<dt>${res.footData[i].title}</dt>`;
+						//如果有text数组，则遍历，没有就是生成二维码图片
+						if(res.footData[i].text){
+							//console.log(res.footData[i].text);
+							//遍历数组生成dd
+							var arr=res.footData[i].text.map(function(value){
+								return `<dd><a href="">${value}</a></dd>`;
+							});
+							var ddhtml=arr.join("");
+							//
+							var html=`<dl>${dthtml}${ddhtml}</dl>`;
+							service.append(html);
+						}else if(res.footData[i].imgUrl){
+							//console.log(res.footData[i].imgUrl);
+							var ddhtml=`<dd><img src=${res.footData[i].imgUrl} /></dd>`;
+							var html=`<dl>${dthtml}${ddhtml}<dl>`;
+							service.append(html);
+						}
+					}
+				}
+			});
+	})
+		
+	})(jQuery)
+	
+	
+	
+	
+</script>

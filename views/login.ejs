@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<link rel="stylesheet" href="./public/public.css" />
+
+	<link rel="stylesheet" href="./css/login.css" />
+	<script src="./js/pool.js"></script>
+	<script src="http://cdn.bootcss.com/jquery/1.8.3/jquery.js"></script>
+	<body>
+		<div class="head"></div>
+		
+		<div class="margin Login">
+			<div class="loginTab">
+				<div class="tabTop clear">
+					<p class="left">欢迎回来</p>
+					<a href="register.html" class="right">立即注册</a>
+					<span class="right">还不是会员？</span>
+				</div>
+				<input type="text" id="account" placeholder="手机号/邮箱" />
+				<input type="password" id="password" placeholder="密码" />
+				<input type="text" id="tishi"/>
+				<a href="#" class="goIndex"><button class="loginBtn">登录</button></a>
+				<div class="cook clear">
+					<input type="checkbox" id="check" checked="checked" class="left"/>
+					<span class="left">7天内免登录</span>
+					<a href="" class="right">忘记密码？</a>
+				</div>
+				<div class="others">
+					<i></i><p>您还可以通过以下方式直接登录</p><i></i>
+					<a class="wechat" href="https://open.weixin.qq.com/connect/qrconnect?appid=wx645ae7136fdb809b&redirect_uri=http%3A%2F%2Fwww.thebeastshop.com%2Fweixin%2Flogin%2FcallBack.htm&response_type=code&scope=snsapi_login&state=7f65553de8624ee03820612a32980fb9#wechat_redirect">
+						<span></span>
+						<b>微信</b>
+					</a>
+					<a class="weibo" href="">
+						<span></span>
+						<b>微博</b>
+					</a>
+				</div>
+			</div>		
+		</div>
+		
+		<div class="foot"></div>
+	</body>
+</html>
+<script>
+	jQuery.noConflict();
+(function($){
+	$(function(){
+		$(".head").load("head.html",function(){});
+		//$("p").css("color","#f00");
+		login();
+		function login(){
+			//joyce   y17621913052
+			//var bStop=true;
+			var tishi=$("#tishi");
+			if(localStorage.username){
+				/* $("#account").val(getCookie("username"));
+				$("#password").val(getCookie("password")); */
+				$("#account").val(localStorage.username);
+				$("#password").val(localStorage.password)
+				$("#check")[0].ckecked="checked";
+			}
+			
+			$(".loginBtn").click(function(){
+				//console.log(222);
+				/*//密码
+				var regPass=/^[a-zA-Z]{1}[a-zA-Z0-9]{5,15}/;
+				var pass=that.find("#password").val();
+				if(!regPass.test(pass)){
+					that.find("#password").css("border-color","#BE0929");
+					tishi.val("密码格式不正确");
+					bStop=false;
+				}
+				//名称
+				var regName=/^[^\d]{1}[a-zA-Z0-9_]{1,5}/;
+				var name=that.find("#account").val();
+				if(!regName.test(name)){
+					that.find("#account").css("border-color","#BE0929");
+					tishi.val("姓名格式不正确");
+					bStop=false;
+				}*/
+				var name=$("#account").val();
+				var pass=$("#password").val();
+				if(localStorage.username!=name||localStorage.password!=pass){
+					tishi.val("登录账号错误，如果是境外手机用户请填写国际区号");
+				}else{
+					if($("#check")[0].checked){
+						/* setCookie("username",name,7);
+						setCookie("password",pass,7); */
+						localStorage.setItem("username",name);
+						localStorage.setItem("password",pass);
+					}
+					
+					/* setCookie("yes","ok"); */
+					localStorage.setItem("yes","ok");
+					//$(".login").eq(0).text(name);
+					
+					$(".goIndex").attr("href","index.html");
+					
+				}
+
+			});
+			
+			$(".wechat span").hover(function(){
+				$(".wechat span").css("background-position","-54px -1px");
+			},function(){
+				$(".wechat span").css("background-position","0 -1px");
+			});
+			
+			$(".weibo span").hover(function(){
+				$(".weibo span").css("background-position","-54px -63px");
+			},function(){
+				$(".weibo span").css("background-position","0 -63px");
+			});
+			
+			
+			
+		}
+		
+		
+		$(".foot").load("foot.html",function(){});
+	})
+})(jQuery)
+</script>

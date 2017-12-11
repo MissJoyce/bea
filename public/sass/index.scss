@@ -1,0 +1,83 @@
+.margin{position:relative;}
+.imgblocks{margin-top:12px;
+
+    .series{
+        position:relative;
+        a{
+            img{
+                display:block;
+            }
+        }
+        .filter{position:absolute;width:100%;height:100%;left:0;;top:0;background:rgba(0,0,0,0.7);display:none;
+            .text{
+                position:absolute;width:100%;left:50%;top:50%;transform: translate(-50%,-50%); color:#fff;text-align:center;
+                h3{font:23px/31px "";}
+                h4{font:12px/20px "";}
+                p{
+                    font-size:18px;
+                    b{display:inline-block;font:700 50px/58px "";padding-top:12px;}
+                    span{display:inline-block;font:700 50px/58px "";padding-top:12px;}
+                }
+            }
+        
+        }
+        
+    }
+}
+.row1{
+    .series1{
+        width:717px;height:474px;
+        a{
+            img{width:717px;height:474px;}
+        }
+    }
+    .series2{
+        width:231px;height:474px;
+        a{
+            img{width:231px;height:474px;}
+        }
+    }
+}
+    
+
+.row2{
+    .series1{
+        width:474px;height:474px;display:flex;justify-content: space-between;flex-wrap: wrap;
+        .item{position:relative;}
+        .img-item1{img{width:231px;height:231px;}}
+        .img-item2{img{width:231px;height:231px;}}
+        .img-item3{img{width:474px;height:231px;}margin-top:12px;}
+    }
+    .series2{
+        width:474px;height:474px;
+        a{
+            img{width:474px;height:474px;}
+        }
+    }
+}
+
+.stores{
+    margin-top:12px;text-align:center;
+    .img{}
+    .list{display:flex;justify-content: space-between;
+        li{img{display:block;width:310px;}}
+    }
+}
+
+.tips{position:absolute;width:170px;right:-180px;bottom:-230px;
+    .appImg{border:1px solid #d1d1d1;position:relative;
+        img{display:inline-block;width:170px;}
+        span{font:12px/34px "";padding:0 10px;position:absolute;right:11px;top:0;color:#fff;cursor:pointer;z-index:99;}
+    }
+    .flower{
+        text-align:center;
+        p{font:12px/24px "";height:24px;background:#d1d1d1;
+            span{display:inline-block;padding:0 8px;}
+        }
+        .birst{display:block;width:70px;margin:10px 0 10px 50px;}
+        a{
+            img{display:block;width:81px;margin-left:45px;}
+        }
+        
+    }
+}
