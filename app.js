@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var consolidate = require("consolidate");
 
-//首页-->导航+foot
+//引入路由首页-->导航+foot
 var headfoot = require('./routes/headfoot');
 var index = require("./routes/index");
 var pList = require("./routes/pList");
